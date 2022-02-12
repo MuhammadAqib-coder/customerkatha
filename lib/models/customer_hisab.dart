@@ -8,10 +8,8 @@ class CustomerHisab extends HiveObject {
   String name;
 
   @HiveField(1)
-  int? price;
+  String description;
 
-  @HiveField(2)
-  String date;
 
-  CustomerHisab({required this.name, this.price, required this.date});
+  CustomerHisab({required this.name, required this.description});
 }

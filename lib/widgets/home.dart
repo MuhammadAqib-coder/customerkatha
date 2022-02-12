@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
 import 'package:flutter_doc_sqflite/util/data_search.dart';
+import 'package:flutter_doc_sqflite/widgets/customer_detail_list.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'detail_page.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //getList();
     return Scaffold(
         appBar: AppBar(
-          title: Text("Hisab List"),
+          centerTitle: true,
+          title: Text("EasyLoad Khata"),
           actions: [
             IconButton(
               icon: Icon(Icons.search),
@@ -37,22 +40,19 @@ class Home extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(
-                        "Rs ${customerhisab.getAt(index)!.price}      ${customerhisab.getAt(index)!.date}"),
+                    subtitle: Text(customerhisab.getAt(index)!.description),
                     trailing: IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
                         customerhisab.deleteAt(index);
-                        // getList();
                       },
                     ),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => DetailPage(
-                                    hisab: customerhisab.getAt(index)!,
-                                    appTitle: "Edit Hisab",
+                              builder: (_) => CustomerDetailList(
+                                    instance: customerhisab.getAt(index)!,
                                   )));
                     },
                   ),
@@ -68,8 +68,8 @@ class Home extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (_) => DetailPage(
-                          hisab: CustomerHisab(name: "", date: ""),
-                          appTitle: "New Hisab",
+                          hisab: CustomerHisab(name: "", description: ""),
+                          appTitle: "New Customer",
                         )));
           },
         ));

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
 import 'package:clock/clock.dart';
 import 'package:flutter_doc_sqflite/widgets/home.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-
 
 class DetailPage extends StatelessWidget {
   final CustomerHisab hisab;
@@ -13,7 +14,6 @@ class DetailPage extends StatelessWidget {
   DetailPage({Key? key, required this.hisab, required this.appTitle})
       : super(key: key);
 
- 
   final _formKey = GlobalKey<FormState>();
 
   var titleController = TextEditingController();
@@ -30,7 +30,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     titleController.text = hisab.name;
-    descController.text = hisab.price.toString();
+    descController.text = hisab.description;
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
@@ -42,10 +42,11 @@ class DetailPage extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                keyboardType: TextInputType.text,
                 controller: titleController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Title is required";
+                    return "Name is required";
                   }
                   return null;
                 },
@@ -62,6 +63,7 @@ class DetailPage extends StatelessWidget {
                 height: 15.0,
               ),
               TextFormField(
+                keyboardType: TextInputType.text,
                 controller: descController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -73,7 +75,7 @@ class DetailPage extends StatelessWidget {
                 //   _description = value;
                 // },
                 decoration: InputDecoration(
-                    labelText: "price",
+                    labelText: "description",
                     filled: true,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0))),
@@ -91,14 +93,15 @@ class DetailPage extends StatelessWidget {
                           return;
                         }
                         String name = titleController.text.toString();
-                        int price = int.parse(descController.text);
+                        //int price = int.parse(descController.text);
+                        String desc = descController.text;
                         //_formKey.currentState!.save();
                         if (!hisab.isInBox) {
                           var date = clock.now();
                           String formattedDate =
                               DateFormat('dd-MM-yyyy').format(date);
-                          transaction.add(CustomerHisab(
-                              name: name, price: price, date: formattedDate));
+                          transaction.add(
+                              CustomerHisab(name: name, description: desc));
                           // helper.insertHisab(
                           //     Hisab(title: title, description: desc));
                           titleController.text = "";
@@ -106,7 +109,7 @@ class DetailPage extends StatelessWidget {
                           Navigator.pop(context);
                         } else {
                           hisab.name = name;
-                          hisab.price = price;
+                          hisab.description = desc;
                           //helper.updateHisab(instance);
                           hisab.save();
                           titleController.text = "";

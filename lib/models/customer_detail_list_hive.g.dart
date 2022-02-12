@@ -1,35 +1,39 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customer_hisab.dart';
+part of 'customer_detail_list_hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CustomerHisabAdapter extends TypeAdapter<CustomerHisab> {
+class CustomerDetailListHiveAdapter
+    extends TypeAdapter<CustomerDetailListHive> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  CustomerHisab read(BinaryReader reader) {
+  CustomerDetailListHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CustomerHisab(
-      name: fields[0] as String,
-      description: fields[1] as String,
+    return CustomerDetailListHive(
+      price: fields[0] as int,
+      date: fields[1] as String,
+      name: fields[2] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CustomerHisab obj) {
+  void write(BinaryWriter writer, CustomerDetailListHive obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.price)
       ..writeByte(1)
-      ..write(obj.description);
+      ..write(obj.date)
+      ..writeByte(2)
+      ..write(obj.name);
   }
 
   @override
@@ -38,7 +42,7 @@ class CustomerHisabAdapter extends TypeAdapter<CustomerHisab> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CustomerHisabAdapter &&
+      other is CustomerDetailListHiveAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
