@@ -5,14 +5,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class DataSearch extends SearchDelegate<String> {
   var hisab = Hive.box<CustomerHisab>("hisab");
-  var list;
+  var list = [];
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           if (query.isEmpty) {
             close(context, "");
@@ -27,7 +26,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -41,12 +39,11 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Icon(Icons.book),
+          leading: const Icon(Icons.book),
           title: Text(list[index].name),
           subtitle: Text("Rs ${list[index].price}   ${list[index].date}"),
         );
@@ -56,14 +53,13 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
     list = query.isEmpty
         ? hisab.values.toList()
         : hisab.values
             .where((value) => value.name.toLowerCase().contains(query))
             .toList();
     return list.isEmpty
-        ? Center(
+        ? const Center(
             child: Text(
             "No Data Found",
             style: TextStyle(fontSize: 22.0),
@@ -75,11 +71,11 @@ class DataSearch extends SearchDelegate<String> {
                 onTap: () {
                   showResults(context);
                 },
-                leading: Icon(Icons.book),
+                leading: const Icon(Icons.book),
                 title: RichText(
                   text: TextSpan(
                     text: list[index].name.substring(0,query.length),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0
@@ -87,7 +83,7 @@ class DataSearch extends SearchDelegate<String> {
                     children: [
                       TextSpan(
                         text: list[index].name.substring(query.length),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 20.0
                         )

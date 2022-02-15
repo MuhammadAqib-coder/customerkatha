@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
-import 'package:clock/clock.dart';
-import 'package:flutter_doc_sqflite/widgets/home.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 class DetailPage extends StatelessWidget {
   final CustomerHisab hisab;
@@ -16,13 +11,13 @@ class DetailPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  var titleController = TextEditingController();
+  final titleController = TextEditingController();
 
-  var descController = TextEditingController();
+  final descController = TextEditingController();
 
   //var helper = DatabaseHelper.databaseHelper;
 
-  var home = Home();
+  //var home = Home();
 
   var transaction = Hive.box<CustomerHisab>("hisab");
   //var _character = SingingCharacter.notCompleted;
@@ -87,7 +82,7 @@ class DetailPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      child: Text("save"),
+                      child: const Text("save"),
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) {
                           return;
@@ -97,9 +92,9 @@ class DetailPage extends StatelessWidget {
                         String desc = descController.text;
                         //_formKey.currentState!.save();
                         if (!hisab.isInBox) {
-                          var date = clock.now();
-                          String formattedDate =
-                              DateFormat('dd-MM-yyyy').format(date);
+                          // var date = clock.now();
+                          // String formattedDate =
+                          //     DateFormat('dd-MM-yyyy').format(date);
                           transaction.add(
                               CustomerHisab(name: name, description: desc));
                           // helper.insertHisab(
@@ -125,11 +120,11 @@ class DetailPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      child: Text("delete"),
+                      child: const Text("delete"),
                       onPressed: () {
                         if (!hisab.isInBox) {
                           var snackBar =
-                              SnackBar(content: Text("No data is provided"));
+                              const SnackBar(content: Text("No data is provided"));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           hisab.delete();

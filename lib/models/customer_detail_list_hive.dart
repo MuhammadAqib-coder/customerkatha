@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'customer_detail_list_hive.g.dart';
@@ -6,7 +5,7 @@ part 'customer_detail_list_hive.g.dart';
 @HiveType(typeId: 1)
 class CustomerDetailListHive extends HiveObject {
   @HiveField(0)
-  int price;
+  String price;
   @HiveField(1)
   String date;
   @HiveField(2)

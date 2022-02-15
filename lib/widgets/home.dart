@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
 import 'package:flutter_doc_sqflite/util/data_search.dart';
 import 'package:flutter_doc_sqflite/widgets/customer_detail_list.dart';
@@ -8,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'detail_page.dart';
 
 class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +15,10 @@ class Home extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("EasyLoad Khata"),
+          title: const Text("EasyLoad Khata"),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 showSearch(context: context, delegate: DataSearch());
               },
@@ -34,15 +33,15 @@ class Home extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    leading: Icon(Icons.book),
+                    leading: const Icon(Icons.book),
                     title: Text(
                       customerhisab.getAt(index)!.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(customerhisab.getAt(index)!.description),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         customerhisab.deleteAt(index);
                       },
@@ -62,7 +61,7 @@ class Home extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push(
                 context,

@@ -1,39 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customer_detail_list_hive.dart';
+part of 'variable_value_hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CustomerDetailListHiveAdapter
-    extends TypeAdapter<CustomerDetailListHive> {
+class VariableValueAdapter extends TypeAdapter<VariableValue> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  CustomerDetailListHive read(BinaryReader reader) {
+  VariableValue read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CustomerDetailListHive(
-      price: fields[0] as String,
-      date: fields[1] as String,
-      name: fields[2] as String,
+    return VariableValue(
+      name: fields[0] as String,
+      total: fields[1] as int,
+      advance: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CustomerDetailListHive obj) {
+  void write(BinaryWriter writer, VariableValue obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.price)
+      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.date)
+      ..write(obj.total)
       ..writeByte(2)
-      ..write(obj.name);
+      ..write(obj.advance);
   }
 
   @override
@@ -42,7 +41,7 @@ class CustomerDetailListHiveAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CustomerDetailListHiveAdapter &&
+      other is VariableValueAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
