@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
+import 'package:flutter_doc_sqflite/widgets/customer_detail_list.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -45,7 +46,14 @@ class DataSearch extends SearchDelegate<String> {
         return ListTile(
           leading: const Icon(Icons.book),
           title: Text(list[index].name),
-          subtitle: Text("Rs ${list[index].price}   ${list[index].date}"),
+          subtitle: Text("Rs ${list[index].description}"),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CustomerDetailList(instance: list[index])));
+          },
         );
       },
     );
@@ -74,24 +82,19 @@ class DataSearch extends SearchDelegate<String> {
                 leading: const Icon(Icons.book),
                 title: RichText(
                   text: TextSpan(
-                    text: list[index].name.substring(0,query.length),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0
-                    ),
-                    children: [
-                      TextSpan(
-                        text: list[index].name.substring(query.length),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 20.0
-                        )
-                      )
-                    ]
-                  ),
+                      text: list[index].name.substring(0, query.length),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                      children: [
+                        TextSpan(
+                            text: list[index].name.substring(query.length),
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 20.0))
+                      ]),
                 ),
-                subtitle: Text(list[index].price.toString()),
+                subtitle: Text(list[index].description),
               );
             },
           );

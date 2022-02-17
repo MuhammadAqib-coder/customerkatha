@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
 import 'package:hive/hive.dart';
+import 'package:path/path.dart';
 
 class DetailPage extends StatelessWidget {
   final CustomerHisab hisab;
@@ -91,26 +92,33 @@ class DetailPage extends StatelessWidget {
                         //int price = int.parse(descController.text);
                         String desc = descController.text;
                         //_formKey.currentState!.save();
-                        if (!hisab.isInBox) {
-                          // var date = clock.now();
-                          // String formattedDate =
-                          //     DateFormat('dd-MM-yyyy').format(date);
-                          transaction.add(
-                              CustomerHisab(name: name, description: desc));
-                          // helper.insertHisab(
-                          //     Hisab(title: title, description: desc));
-                          titleController.text = "";
-                          descController.text = "";
-                          Navigator.pop(context);
+                        var list = transaction.values
+                            .where((element) => element.name == name)
+                            .toList();
+                        if (list.isEmpty) {
+                          if (!hisab.isInBox) {
+                            // var date = clock.now();
+                            // String formattedDate =
+                            //     DateFormat('dd-MM-yyyy').format(date);
+                            transaction.add(
+                                CustomerHisab(name: name, description: desc));
+                            // helper.insertHisab(
+                            //     Hisab(title: title, description: desc));
+                            titleController.text = "";
+                            descController.text = "";
+                            Navigator.pop(context);
+                          } else {
+                            hisab.name = name;
+                            hisab.description = desc;
+                            //helper.updateHisab(instance);
+                            hisab.save();
+                            titleController.text = "";
+                            descController.text = "";
+                            Navigator.pop(context);
+                            // transaction.put(key, instance);
+                          }
                         } else {
-                          hisab.name = name;
-                          hisab.description = desc;
-                          //helper.updateHisab(instance);
-                          hisab.save();
-                          titleController.text = "";
-                          descController.text = "";
-                          Navigator.pop(context);
-                          // transaction.put(key, instance);
+                          _showalertDialog(context);
                         }
                       },
                     ),
@@ -123,8 +131,8 @@ class DetailPage extends StatelessWidget {
                       child: const Text("delete"),
                       onPressed: () {
                         if (!hisab.isInBox) {
-                          var snackBar =
-                              const SnackBar(content: Text("No data is provided"));
+                          var snackBar = const SnackBar(
+                              content: Text("No data is provided"));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
                           hisab.delete();
@@ -145,5 +153,21 @@ class DetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _showalertDialog(BuildContext context) {
+    var button = TextButton(
+      child: const Text("Ok"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    var alert = AlertDialog(
+      title: const Text("name existance"),
+      content:
+          const Text("This name is already registered try with different name"),
+      actions: [button],
+    );
+    showDialog(context: context, builder: (context) => alert);
   }
 }
