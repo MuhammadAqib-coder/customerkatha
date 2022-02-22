@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  draggable_fab: ^0.1.4
   flutter:
     sdk: flutter
   hive: ^2.0.5

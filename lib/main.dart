@@ -23,7 +23,7 @@ void main() async {
 
   runApp(ChangeNotifierProvider(
     create: (_) => PriceProvider(),
-    child: const MaterialApp(
+    child:  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Remainder App",
       home: Home(),

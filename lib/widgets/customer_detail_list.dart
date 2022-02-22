@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
 import 'package:flutter_doc_sqflite/models/variable_value_hive.dart';
+import 'package:flutter_doc_sqflite/util/customer_list.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -44,19 +45,23 @@ class _CustomerDetailListState extends State<CustomerDetailList> {
           total = value.total;
           advance = value.advance;
         } else {
-          varaibleInstance = VariableValue(name: "", total: 0, advance: 0);
+          varaibleInstance = VariableValue(
+              name: widget.instance.name, total: total, advance: advance);
         }
       });
     } else {
-      varaibleInstance = VariableValue(name: "", total: 0, advance: 0);
+      varaibleInstance = VariableValue(
+          name: widget.instance.name, total: advance, advance: advance);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    
     var list = hisabList.values
         .where((hisab) => hisab.name == widget.instance.name)
         .toList();
+    
 
     // total = advanceResult;
     // list.forEach((element) {
@@ -212,6 +217,7 @@ class _CustomerDetailListState extends State<CustomerDetailList> {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 32.0),
                               title: Text(
                                 "Rs ${list[index].price}",
                                 style: const TextStyle(
@@ -219,13 +225,7 @@ class _CustomerDetailListState extends State<CustomerDetailList> {
                                     fontSize: 18.0),
                               ),
                               subtitle: Text(list[index].date),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  hisabList.deleteAt(index);
-                                  setState(() {});
-                                },
-                              ),
+                              trailing: const Icon(Icons.emoji_emotions_rounded),
                             ),
                           );
                         },
@@ -238,19 +238,16 @@ class _CustomerDetailListState extends State<CustomerDetailList> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: "Advance Rs ",
-                    style: const TextStyle(color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: "$advance",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                        )
-                      )
-                    ]
-                  ),
+                      text: "Advance Rs ",
+                      style: const TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text: "$advance",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold))
+                      ]),
                 ),
                 RichText(
                   text: TextSpan(
@@ -291,8 +288,9 @@ class _CustomerDetailListState extends State<CustomerDetailList> {
       varaibleInstance.advance = advance;
       varaibleInstance.save();
     } else {
-      varaibles.add(VariableValue(
-          name: widget.instance.name, total: total, advance: advance));
+      varaibleInstance.total = total;
+      varaibleInstance.advance = advance;
+      varaibles.add(varaibleInstance);
     }
     super.deactivate();
   }
