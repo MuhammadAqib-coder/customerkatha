@@ -11,5 +11,5 @@ class CustomerHisab extends HiveObject {
   String description;
 
 
-  CustomerHisab({required this.name, required this.description});
+  CustomerHisab({required this.name, required this.description, state});
 }

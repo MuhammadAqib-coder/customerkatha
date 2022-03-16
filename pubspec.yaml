@@ -45,7 +45,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^1.1.2
-
+  flutter_launcher_icons: ^0.9.2
+flutter_icons:
+  image_path: 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_doc_sqflite/models/customer_detail_list_hive.dart';
 import 'package:flutter_doc_sqflite/models/customer_hisab.dart';
@@ -10,23 +11,24 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Hive.initFlutter();
+  //await Hive.initFlutter();
   //Hive.registerAdapter(TransactionAdapter());
   //await Hive.openBox<Transaction>("transaction");
 
-  Hive.registerAdapter(CustomerHisabAdapter());
-  Hive.registerAdapter(CustomerDetailListHiveAdapter());
-  Hive.registerAdapter(VariableValueAdapter());
-  await Hive.openBox<CustomerHisab>("hisab");
-  await Hive.openBox<CustomerDetailListHive>("hisabList");
-  await Hive.openBox<VariableValue>("varaibles");
+  //Hive.registerAdapter(CustomerHisabAdapter());
+  //Hive.registerAdapter(CustomerDetailListHiveAdapter());
+  //Hive.registerAdapter(VariableValueAdapter());
+  //await Hive.openBox<CustomerHisab>("hisab");
+  //await Hive.openBox<CustomerDetailListHive>("hisabList");
+  //await Hive.openBox<VariableValue>("varaibles");
 
-  runApp(ChangeNotifierProvider(
-    create: (_) => PriceProvider(),
-    child:  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Remainder App",
-      home: Home(),
+  runApp(MaterialApp(
+    theme: ThemeData(
+      brightness: Brightness.dark,
+      primarySwatch: Colors.blue
     ),
+    debugShowCheckedModeBanner: false,
+    title: "Remainder App",
+    home: Home(),
   ));
 }
